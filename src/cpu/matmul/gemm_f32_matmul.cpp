@@ -122,6 +122,10 @@ status_t gemm_f32_matmul_t::execute_ref(const exec_ctx_t &ctx) const {
     auto weights = CTX_IN_MEM(const weights_data_t *, DNNL_ARG_WEIGHTS);
     auto bias = CTX_IN_MEM(const char *, DNNL_ARG_BIAS);
     auto dst = CTX_OUT_MEM(dst_data_t *, DNNL_ARG_DST);
+    if(get_verbose())
+    {
+	    printf("dnnl_verbose,mem_handle,matmul_gemm_f32,%" PRIxPTR ",src:%" PRIxPTR " wei:%" PRIxPTR " bias:%" PRIxPTR " dst:%" PRIxPTR "\n", (uintptr_t)pd(), (uintptr_t)src, (uintptr_t)weights, (uintptr_t)bias, (uintptr_t)dst);
+    }
 
     DEFINE_SCALES_BUFFER(scales);
 

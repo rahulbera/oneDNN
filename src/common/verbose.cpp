@@ -69,7 +69,7 @@ int get_verbose() {
     }
     static bool version_printed = false;
     if (!version_printed && verbose.get() > 0) {
-        printf("dnnl_verbose,info,oneDNN v%d.%d.%d (commit %s)\n",
+        printf("rbera_dnnl_verbose,info,oneDNN v%d.%d.%d (commit %s)\n",
                 dnnl_version()->major, dnnl_version()->minor,
                 dnnl_version()->patch, dnnl_version()->hash);
         printf("dnnl_verbose,info,cpu,runtime:%s\n",
@@ -508,6 +508,7 @@ static void init_info_eltwise(const engine_t *e, pd_t *s, char *buffer) {
 
     attr2str(attr_str, DNNL_VERBOSE_ATTR_LEN, attr_written, s->attr());
 
+    DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written, "data:%" PRIxPTR " ", (uintptr_t)s);
     DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written,
             "alg:%s alpha:%g beta:%g", dnnl_alg_kind2str(s->desc()->alg_kind),
             s->desc()->alpha, s->desc()->beta);
@@ -681,8 +682,13 @@ static void init_info_mem(const engine_t *e, pd_t *s, char *buffer) {
     }
 
     attr2str(attr_str, DNNL_VERBOSE_ATTR_LEN, attr_written, s->attr());
+    
+    DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written, "pd_t:%" PRIxPTR "", (uintptr_t)s);
 
-    dnnl_md2dim_str(prb_str, DNNL_VERBOSE_PRB_LEN, s->dst_md());
+    DPRINT(prb_str, DNNL_VERBOSE_PRB_LEN, prb_written, "src_");
+    DIM2STR(prb_str, DNNL_VERBOSE_PRB_LEN, prb_written, s->src_md());
+    DPRINT(prb_str, DNNL_VERBOSE_PRB_LEN, prb_written, " dst_");
+    DIM2STR(prb_str, DNNL_VERBOSE_PRB_LEN, prb_written, s->dst_md());
 
     verbose_templ(buffer, e, s->kind(), s->name(), prop_kind::undef, dat_str,
             attr_str, aux_str, prb_str);
@@ -722,6 +728,7 @@ static void init_info_pooling(engine_t *e, pd_t *s, char *buffer) {
 
     attr2str(attr_str, DNNL_VERBOSE_ATTR_LEN, attr_written, s->attr());
 
+    DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written, "pd:%" PRIxPTR " ", (uintptr_t)s);
     DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written, "alg:%s",
             dnnl_alg_kind2str(s->desc()->alg_kind));
 
@@ -914,6 +921,8 @@ static void init_info_matmul(const engine_t *e, pd_t *s, char *buffer) {
     }
 
     attr2str(attr_str, DNNL_VERBOSE_ATTR_LEN, attr_written, s->attr());
+    
+    DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written, "pd_t:%" PRIxPTR "", (uintptr_t)s);
 
     if (s->batched())
         DPRINT(prb_str, DNNL_VERBOSE_PRB_LEN, prb_written, "b" DFMT,
