@@ -319,6 +319,10 @@ status_t jit_uni_eltwise_fwd_t<isa, d_type>::execute(
         const exec_ctx_t &ctx) const {
     auto src = CTX_IN_MEM(const data_t *, DNNL_ARG_SRC);
     auto dst = CTX_OUT_MEM(data_t *, DNNL_ARG_DST);
+    if(get_verbose() >= 3)
+    {
+        printf("dnnl_verbose,mem_handle,eltwise,jit,%" PRIxPTR ",src:%" PRIxPTR " dst:%" PRIxPTR "\n", (uintptr_t)pd(), (uintptr_t)src, (uintptr_t)dst);
+    }
 
     const memory_desc_wrapper data_d(pd()->src_md());
     const auto nelems = data_d.nelems(true);

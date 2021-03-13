@@ -37,6 +37,10 @@ status_t gemm_inner_product_fwd_t<data_type>::execute_forward(
     auto weights = CTX_IN_MEM(const data_t *, DNNL_ARG_WEIGHTS);
     auto bias = CTX_IN_MEM(const data_t *, DNNL_ARG_BIAS);
     auto dst = CTX_OUT_MEM(data_t *, DNNL_ARG_DST);
+    if(get_verbose() >= 3)
+    {
+	    printf("dnnl_verbose,mem_handle,inner_product,gemm:f32,%" PRIxPTR ",src:%" PRIxPTR " wei:%" PRIxPTR " bias:%" PRIxPTR " dst:%" PRIxPTR "\n", (uintptr_t)pd(), (uintptr_t)src, (uintptr_t)weights, (uintptr_t)bias, (uintptr_t)dst);
+    }
 
     const dim_t MB = pd()->MB();
     const dim_t OC = pd()->OC();

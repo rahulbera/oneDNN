@@ -26,6 +26,10 @@ template <data_type_t src_data_type, data_type_t dst_data_type>
 status_t simple_sum_t<src_data_type, dst_data_type>::execute(
         const exec_ctx_t &ctx) const {
     auto output = CTX_OUT_MEM(dst_data_t *, DNNL_ARG_DST);
+    if(get_verbose() >= 3)
+    {
+        printf("dnnl_verbose,mem_handle,sum,simple:any,%" PRIxPTR ",dst:%" PRIxPTR " ", (uintptr_t)pd(), (uintptr_t)output);
+    }    
 
     const memory_desc_wrapper o_d(pd()->dst_md());
     output += o_d.blk_off(0);
@@ -37,6 +41,14 @@ status_t simple_sum_t<src_data_type, dst_data_type>::execute(
         input_ptrs[a]
                 = CTX_IN_MEM(const src_data_t *, DNNL_ARG_MULTIPLE_SRC + a)
                 + i_d.blk_off(0);
+    	if(get_verbose() >= 3)
+    	{
+        	printf(" src%d:%" PRIxPTR "", a, (uintptr_t)input_ptrs[a]);
+    	}    
+    }
+    if(get_verbose() >= 3)
+    {
+	    printf("\n");
     }
 
     const dim_t nelems = pd()->nelems_;

@@ -689,6 +689,10 @@ template <cpu_isa_t isa>
 status_t jit_uni_softmax_fwd_t<isa>::execute(const exec_ctx_t &ctx) const {
     auto src = CTX_IN_MEM(const char *, DNNL_ARG_SRC);
     auto dst = CTX_OUT_MEM(char *, DNNL_ARG_DST);
+    if(get_verbose() >= 3)
+    {
+        printf("dnnl_verbose,mem_handle,softmax_fwd,jit,%" PRIxPTR ",src:%" PRIxPTR " dst:%" PRIxPTR "\n", (uintptr_t)pd(), (uintptr_t)src, (uintptr_t)dst);
+    }
 
     const memory_desc_wrapper data_d(pd()->src_md());
     const auto data_type_size = data_d.data_type() == data_type::bf16

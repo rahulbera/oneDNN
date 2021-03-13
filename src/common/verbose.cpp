@@ -508,7 +508,7 @@ static void init_info_eltwise(const engine_t *e, pd_t *s, char *buffer) {
 
     attr2str(attr_str, DNNL_VERBOSE_ATTR_LEN, attr_written, s->attr());
 
-    DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written, "data:%" PRIxPTR " ", (uintptr_t)s);
+    DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written, "pd_t:%" PRIxPTR " ", (uintptr_t)s);
     DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written,
             "alg:%s alpha:%g beta:%g", dnnl_alg_kind2str(s->desc()->alg_kind),
             s->desc()->alpha, s->desc()->beta);
@@ -575,6 +575,8 @@ static void init_info_inner_product(engine_t *e, pd_t *s, char *buffer) {
     }
 
     attr2str(attr_str, DNNL_VERBOSE_ATTR_LEN, attr_written, s->attr());
+    
+    DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written, "pd_t:%" PRIxPTR "", (uintptr_t)s);
 
     if (s->ndims() == 5) {
         DPRINT(prb_str, DNNL_VERBOSE_PRB_LEN, prb_written,
@@ -778,6 +780,7 @@ static void init_info_softmax(const engine_t *e, pd_t *s, char *buffer) {
 
     attr2str(attr_str, DNNL_VERBOSE_ATTR_LEN, attr_written, s->attr());
 
+    DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written, "pd_t:%" PRIxPTR " ", (uintptr_t)s);
     DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written, "alg:%s ",
             s->is_softmax() ? "softmax" : "logsoftmax");
     DPRINT(aux_str, DNNL_VERBOSE_AUX_LEN, aux_written, "axis:%d", s->axis());

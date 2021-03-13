@@ -1271,6 +1271,10 @@ struct jit_uni_reorder_t : public primitive_t {
     status_t execute(const exec_ctx_t &ctx) const override {
         auto in = CTX_IN_MEM(const char *, DNNL_ARG_FROM);
         auto out = CTX_OUT_MEM(char *, DNNL_ARG_TO);
+        if(get_verbose() >= 3)
+        {
+            printf("dnnl_verbose,mem_handle,reorder,jit,%" PRIxPTR ",src:%" PRIxPTR " dst:%" PRIxPTR "\n", (uintptr_t)pd(), (uintptr_t)in, (uintptr_t)out);
+        }
         DEFINE_SCALES_BUFFER(scales);
 
         omp_driver(in, out, scales);

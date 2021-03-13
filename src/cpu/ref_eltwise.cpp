@@ -142,6 +142,10 @@ void ref_eltwise_fwd_t<data_type>::execute_forward_nCspBc_padded(
         const exec_ctx_t &ctx) const {
     auto src = CTX_IN_MEM(const data_t *, DNNL_ARG_SRC);
     auto dst = CTX_OUT_MEM(data_t *, DNNL_ARG_DST);
+    if(get_verbose() >= 3)
+    {
+        printf("dnnl_verbose,mem_handle,eltwise,ref:any,%" PRIxPTR ",src:%" PRIxPTR " dst:%" PRIxPTR "\n", (uintptr_t)pd(), (uintptr_t)src, (uintptr_t)dst);
+    }
 
     const memory_desc_wrapper data_d(pd()->src_md());
     const blocking_desc_t &blk = data_d.blocking_desc();
@@ -180,6 +184,10 @@ void ref_eltwise_fwd_t<data_type>::execute_forward_generic(
 
     auto src = CTX_IN_MEM(const data_t *, DNNL_ARG_SRC);
     auto dst = CTX_OUT_MEM(data_t *, DNNL_ARG_DST);
+    if(get_verbose() >= 3)
+    {
+        printf("dnnl_verbose,mem_handle,eltwise,ref:any,%" PRIxPTR ",src:%" PRIxPTR " dst:%" PRIxPTR "\n", (uintptr_t)pd(), (uintptr_t)src, (uintptr_t)dst);
+    }
 
     const memory_desc_wrapper data_d(pd()->src_md());
 
@@ -206,6 +214,10 @@ void ref_eltwise_fwd_t<data_type>::execute_forward_dense(
         const exec_ctx_t &ctx) const {
     auto src = CTX_IN_MEM(const data_t *, DNNL_ARG_SRC);
     auto dst = CTX_OUT_MEM(data_t *, DNNL_ARG_DST);
+    if(get_verbose() >= 3)
+    {
+        printf("dnnl_verbose,mem_handle,eltwise,ref:any,%" PRIxPTR ",src:%" PRIxPTR " dst:%" PRIxPTR "\n", (uintptr_t)pd(), (uintptr_t)src, (uintptr_t)dst);
+    }
 
     const memory_desc_wrapper data_d(pd()->src_md());
 

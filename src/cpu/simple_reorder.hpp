@@ -1397,11 +1397,11 @@ struct simple_reorder_t : public primitive_t {
     simple_reorder_t(const pd_t *apd) : primitive_t(apd) {}
 
     status_t execute(const exec_ctx_t &ctx) const override {
-        if(get_verbose())
+        if(get_verbose() >= 3)
         {
             uintptr_t input = (uintptr_t)CTX_IN_MEM(const data_t<type_i> *, DNNL_ARG_FROM);
             uintptr_t output = (uintptr_t)CTX_OUT_MEM(data_t<type_o> *, DNNL_ARG_TO);
-            printf("dnnl_verbose,mem_handle,reorder,%" PRIxPTR ",src:%" PRIxPTR " dst:%" PRIxPTR "\n", (uintptr_t)pd(), input, output);
+            printf("dnnl_verbose,mem_handle,reorder,simple:any,%" PRIxPTR ",src:%" PRIxPTR " dst:%" PRIxPTR "\n", (uintptr_t)pd(), input, output);
         }
 
         return simple_reorder_impl<SIMPLE_REORDER_TEMPL_CALL, spec>::execute(
